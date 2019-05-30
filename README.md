@@ -1,4 +1,4 @@
-# Blubberduck: Pokémon Gogle
+# Blubberduck: Pokémon Stay
 
 ### Naotaka Kinoshita, Shakil Rafi, Michael Ruvinshteyn, Kelly Wang
 
