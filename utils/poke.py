@@ -1,4 +1,4 @@
-import urllib2, json, random, pokebase, os
+import urllib.request, urllib.error, urllib.parse, json, random, pokebase, os
 
 #use pokebase package to get info about this pokemon
 def findPokemon(num):
@@ -12,6 +12,6 @@ def findPokemon(num):
 '''
 info = findPokemon(206)
 for key in info:
-    print key + ": "
-    print info[key]
+    print(key + ": ")
+    print(info[key])
 '''

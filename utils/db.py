@@ -3,7 +3,7 @@ from flask import request, flash
 
 def initDB():
     if not os.path.exists('data/databases.db'):
-        print "Creating database..."
+        print("Creating database...")
         db = sqlite3.connect("data/databases.db")
         c = db.cursor()
         c.execute("CREATE TABLE IF NOT EXISTS users (user TEXT, pass TEXT, pokemon TEXT, PRIMARY KEY(user))")
@@ -12,11 +12,11 @@ def initDB():
             next(rarity_csv_file)
             csvreader = csv.reader(rarity_csv_file)
             for row in csvreader:
-                print "INSERT INTO pokemon_by_rarity VALUES(%s,'%s',%s)" % (row[0], row[1], row[2])
+                print(("INSERT INTO pokemon_by_rarity VALUES(%s,'%s',%s)" % (row[0], row[1], row[2])))
                 c.execute("INSERT INTO pokemon_by_rarity VALUES(%s,\"%s\",%s)" % (row[0], row[1], row[2]))
         db.commit()
         db.close()
-        print "Created database"
+        print("Created database")
 
 #add username and password to database
 def addUser(user, pazz ):
@@ -36,7 +36,7 @@ def addPokemon( user, pokemon , captured):
     db = sqlite3.connect("data/databases.db")
     c = db.cursor()
     c.execute("SELECT pokemon from users where users.user = '%s'" % user)
-    oldBlob = c.fetchone()[0].encode('ascii', 'ignore')
+    oldBlob = c.fetchone()[0].encode('ascii', 'ignore').decode()
     if captured:
         oldBlob = oldBlob[:pokemon] + '2' + oldBlob[pokemon + 1:]
     elif oldBlob[pokemon] != '2':

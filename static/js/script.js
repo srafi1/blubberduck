@@ -13,7 +13,7 @@ var pkmn = [];
 ***/
 function addpkmn(e) {
     if (e) {
-        eval('pkmn.push(' + e + ');');
+        pkmn.push(e)
         console.log('loaded pokemon');
     }
     //dont load more than 20 pokemon

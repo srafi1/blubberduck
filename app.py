@@ -1,4 +1,4 @@
-import os, urllib2, json, random, pokebase
+import os, urllib.request, urllib.error, urllib.parse, json, random, pokebase
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from utils import db
 
@@ -21,7 +21,7 @@ def map_script():
     key = ''
     with open('GOOGLE_MAPS_API_KEY', 'rU') as key_file:
         key = key_file.read().strip()
-    script = urllib2.urlopen('https://maps.googleapis.com/maps/api/js?key=%s&libraries=visualization,geometry&callback=initMap' % key)
+    script = urllib.request.urlopen('https://maps.googleapis.com/maps/api/js?key=%s&libraries=visualization,geometry&callback=initMap' % key)
     return script.read()
 
 @app.route('/login',methods=['GET', 'POST'])
@@ -94,9 +94,9 @@ def profile():
         for key in raw_pokemon:
             pokedata = pokebase.pokemon( int(key)+1)
             this_pokemon = {}
-            this_pokemon['sprite'] = pokedata.sprites.front_default.encode('ascii', 'ignore')
+            this_pokemon['sprite'] = pokedata.sprites.front_default.encode('ascii', 'ignore').decode()
             this_pokemon['id'] = pokedata.id
-            this_pokemon['name'] = pokedata.name.encode('ascii', 'ignore').title()
+            this_pokemon['name'] = pokedata.name.encode('ascii', 'ignore').title().decode()
             this_pokemon['type1'] = pokedata.types[0].type.name.title()
             if len(pokedata.types) > 1:
                 #type1: this pokemon has been caught!
@@ -124,10 +124,11 @@ def load_encounter():
     pokemon_choice = db.getPokemonWithRarity(rarity)
     pokemon = pokebase.pokemon(pokemon_choice[0])
     pokedict = {}
-    pokedict['name'] = pokemon.name.encode('ascii', 'ignore')
-    pokedict['sprite'] = pokemon.sprites.front_default.encode('ascii', 'ignore')
+    pokedict['name'] = pokemon.name.encode('ascii', 'ignore').decode()
+    pokedict['sprite'] = pokemon.sprites.front_default.encode('ascii', 'ignore').decode()
     pokedict['id'] = pokemon.id
-    return pokedict.__str__()
+    print(pokedict)
+    return pokedict
 
 @app.route('/set_capture/<int:pokemon_id>')
 def set_capture(pokemon_id):
